@@ -1,0 +1,167 @@
+﻿
+> frontend@0.0.0 lint
+> eslint .
+
+
+C:\Users\ky260\OneDrive\Desktop\ResumeBuilder\frontend\src\App.jsx
+    62:7   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  60 |     const user = localStorage.getItem('user');
+  61 |     if (token && user) {
+> 62 |       setIsAuthenticated(true);
+     |       ^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  63 |       setCurrentUser(JSON.parse(user));
+  64 |     }
+  65 |   }, []);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-hooks/set-state-in-effect
+    88:14  error  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          no-unused-vars
+   122:14  error  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          no-unused-vars
+   226:14  error  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          no-unused-vars
+  1262:8   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  1260 |   return (
+  1261 |     <div className="min-h-screen">
+> 1262 |       <Navbar />
+       |        ^^^^^^ This component is created during render
+  1263 |       
+  1264 |       {currentPage === 'landing' && <LandingPage />}
+  1265 |       {currentPage === 'login' && <LoginPage />}
+
+  312 |
+  313 |   // Navigation Bar
+> 314 |   const Navbar = () => (
+      |                  ^^^^^^^
+> 315 |     <nav className="bg-white shadow-md sticky top-0 z-50 border-b border-gray-200">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 316 |       <div className="max-w-7xl mx-auto px-6 py-4">
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 517 |     </nav>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 518 |   );
+      | ^^^^ The component is created during render here
+  519 |
+  520 |   // Landing Page
+  521 |   const LandingPage = () => (                                                                                                                                                                                                                                                                                                     react-hooks/static-components
+  1264:38  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  1262 |       <Navbar />
+  1263 |       
+> 1264 |       {currentPage === 'landing' && <LandingPage />}
+       |                                      ^^^^^^^^^^^ This component is created during render
+  1265 |       {currentPage === 'login' && <LoginPage />}
+  1266 |       {currentPage === 'signup' && <SignupPage />}
+  1267 |       {currentPage === 'builder' && isAuthenticated && <BuilderPage />}
+
+  519 |
+  520 |   // Landing Page
+> 521 |   const LandingPage = () => (
+      |                       ^^^^^^^
+> 522 |     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 523 |       {/* Hero Section */}
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 776 |     </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 777 |   );
+      | ^^^^ The component is created during render here
+  778 |
+  779 |   // Login Page
+  780 |   const LoginPage = () => (                                                                                                                                                                                      react-hooks/static-components
+  1265:36  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  1263 |       
+  1264 |       {currentPage === 'landing' && <LandingPage />}
+> 1265 |       {currentPage === 'login' && <LoginPage />}
+       |                                    ^^^^^^^^^ This component is created during render
+  1266 |       {currentPage === 'signup' && <SignupPage />}
+  1267 |       {currentPage === 'builder' && isAuthenticated && <BuilderPage />}
+  1268 |     </div>
+
+  778 |
+  779 |   // Login Page
+> 780 |   const LoginPage = () => (
+      |                     ^^^^^^^
+> 781 |     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center py-12 px-4">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 782 |       <div className="max-w-md w-full">
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 840 |     </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 841 |   );
+      | ^^^^ The component is created during render here
+  842 |
+  843 |   // Signup Page
+  844 |   const SignupPage = () => (       react-hooks/static-components
+  1266:37  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  1264 |       {currentPage === 'landing' && <LandingPage />}
+  1265 |       {currentPage === 'login' && <LoginPage />}
+> 1266 |       {currentPage === 'signup' && <SignupPage />}
+       |                                     ^^^^^^^^^^ This component is created during render
+  1267 |       {currentPage === 'builder' && isAuthenticated && <BuilderPage />}
+  1268 |     </div>
+  1269 |   );
+
+  842 |
+  843 |   // Signup Page
+> 844 |   const SignupPage = () => (
+      |                      ^^^^^^^
+> 845 |     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center py-12 px-4">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 846 |       <div className="max-w-md w-full">
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 928 |     </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 929 |   );
+      | ^^^^ The component is created during render here
+  930 |
+  931 |   // Builder Page
+  932 |   const BuilderPage = () => (  react-hooks/static-components
+  1267:57  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  1265 |       {currentPage === 'login' && <LoginPage />}
+  1266 |       {currentPage === 'signup' && <SignupPage />}
+> 1267 |       {currentPage === 'builder' && isAuthenticated && <BuilderPage />}
+       |                                                         ^^^^^^^^^^^ This component is created during render
+  1268 |     </div>
+  1269 |   );
+  1270 | };
+
+   930 |
+   931 |   // Builder Page
+>  932 |   const BuilderPage = () => (
+       |                       ^^^^^^^
+>  933 |     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+       | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  934 |       {showPreview ? (
+       ΓÇª
+       | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 1257 |     </div>
+       | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 1258 |   );
+       | ^^^^ The component is created during render here
+  1259 |
+  1260 |   return (
+  1261 |     <div className="min-h-screen">                                                                                                                                                                                                               react-hooks/static-components
+
+Γ£û 9 problems (9 errors, 0 warnings)
+

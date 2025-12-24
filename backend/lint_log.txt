@@ -1,0 +1,16 @@
+
+> resume-builder-backend@1.0.0 lint
+> eslint .
+
+
+C:\Users\ky260\OneDrive\Desktop\ResumeBuilder\backend\Server.js
+   67:20  error    Unnecessary escape character: \.           no-useless-escape
+   67:36  error    Unnecessary escape character: \.           no-useless-escape
+  251:34  warning  'data' is assigned a value but never used  no-unused-vars
+  456:38  warning  'next' is defined but never used           no-unused-vars
+
+C:\Users\ky260\OneDrive\Desktop\ResumeBuilder\backend\verify_sanity.js
+  51:15  warning  'resume' is assigned a value but never used  no-unused-vars
+
+✖ 5 problems (2 errors, 3 warnings)
+

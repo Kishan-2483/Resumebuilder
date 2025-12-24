@@ -1,0 +1,16 @@
+{
+    "name": "resumebuilder-pro",
+    "version": "1.0.0",
+    "description": "ResumeBuilder Pro - Full Stack Application",
+    "scripts": {
+        "start": "concurrently \"npm run start --prefix backend\" \"npm run preview --prefix frontend\"",
+        "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+        "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
