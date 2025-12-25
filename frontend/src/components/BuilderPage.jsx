@@ -351,7 +351,7 @@ const BuilderPage = ({ currentUser }) => {
                                             className="absolute top-4 right-4 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 bg-white rounded-full shadow-sm"
                                             title="Remove"
                                         >
-                                            Trash
+                                            🗑️
                                         </button>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <input
