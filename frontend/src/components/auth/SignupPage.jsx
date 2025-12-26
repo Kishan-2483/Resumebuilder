@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const SignupPage = ({ onSignup, setCurrentPage }) => {
+const SignupPage = ({ onSignup }) => {
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -131,12 +132,12 @@ const SignupPage = ({ onSignup, setCurrentPage }) => {
                     <div className="mt-8 text-center border-t border-gray-100 pt-6">
                         <p className="text-gray-600">
                             Already have an account?{' '}
-                            <button
-                                onClick={() => setCurrentPage('login')}
+                            <Link
+                                to="/login"
                                 className="text-purple-600 font-semibold hover:text-purple-700 transition-colors"
                             >
                                 Sign In
-                            </button>
+                            </Link>
                         </p>
                     </div>
                 </div>

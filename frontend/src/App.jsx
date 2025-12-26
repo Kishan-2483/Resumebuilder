@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import LandingPage from './components/LandingPage';
@@ -6,10 +7,19 @@ import LoginPage from './components/auth/LoginPage';
 import SignupPage from './components/auth/SignupPage';
 import BuilderPage from './components/BuilderPage';
 
+// Simple ProtectedRoute component
+const ProtectedRoute = ({ children, isAuthenticated }) => {
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('landing');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Check for existing session
@@ -24,11 +34,14 @@ const App = () => {
         handleLogout();
       }
     }
-  }, []); useEffect(() => {
+  }, []);
+
+  useEffect(() => {
     // Force remove dark mode class from html element
     document.documentElement.classList.remove('dark');
     localStorage.removeItem('theme');
   }, []);
+
   const handleLogin = async (e, formData) => {
     try {
       const response = await fetch('/api/auth/login', {
@@ -44,7 +57,7 @@ const App = () => {
         localStorage.setItem('user', JSON.stringify(data.user));
         setIsAuthenticated(true);
         setCurrentUser(data.user);
-        setCurrentPage('builder');
+        navigate('/builder');
       } else {
         alert(data.message || 'Login failed');
       }
@@ -58,7 +71,7 @@ const App = () => {
         localStorage.setItem('token', 'demo-token');
         setIsAuthenticated(true);
         setCurrentUser(user);
-        setCurrentPage('builder');
+        navigate('/builder');
         alert('Demo Mode: Logged in (Backend Unreachable)');
         return;
       }
@@ -86,7 +99,7 @@ const App = () => {
 
       if (data.success) {
         alert('Signup successful! Please login.');
-        setCurrentPage('login');
+        navigate('/login');
       } else {
         alert(data.message || 'Signup failed');
       }
@@ -94,7 +107,7 @@ const App = () => {
       console.error('Signup error:', error);
       if (process.env.NODE_ENV === 'development') {
         alert('Demo Mode: Signup successful (Backend Unreachable)');
-        setCurrentPage('login');
+        navigate('/login');
         return;
       }
       alert('Signup failed. Please check your connection.');
@@ -106,57 +119,39 @@ const App = () => {
     localStorage.removeItem('user');
     setIsAuthenticated(false);
     setCurrentUser(null);
-    setCurrentPage('landing');
+    navigate('/');
   };
 
   return (
     <div className="font-sans text-gray-900 bg-white transition-colors duration-300">
       <Navbar
         isAuthenticated={isAuthenticated}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
         currentUser={currentUser}
         handleLogout={handleLogout}
       />
 
       <main>
-        {currentPage === 'landing' && (
-          <LandingPage setCurrentPage={setCurrentPage} />
-        )}
-
-        {currentPage === 'login' && (
-          <LoginPage
-            onLogin={handleLogin}
-            setCurrentPage={setCurrentPage}
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/login"
+            element={<LoginPage onLogin={handleLogin} />}
           />
-        )}
-
-        {currentPage === 'signup' && (
-          <SignupPage
-            onSignup={handleSignup}
-            setCurrentPage={setCurrentPage}
+          <Route
+            path="/signup"
+            element={<SignupPage onSignup={handleSignup} />}
           />
-        )}
-
-        {currentPage === 'builder' && (
-          isAuthenticated ? (
-            <BuilderPage currentUser={currentUser} />
-          ) : (
-            // Redirect or show message if trying to access builder while logged out
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
-              <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Access Denied</h2>
-                <p className="text-gray-600 mb-6">Please log in to build your resume.</p>
-                <button
-                  onClick={() => setCurrentPage('login')}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
-                >
-                  Go to Login
-                </button>
-              </div>
-            </div>
-          )
-        )}
+          <Route
+            path="/builder"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <BuilderPage currentUser={currentUser} />
+              </ProtectedRoute>
+            }
+          />
+          {/* Catch-all for undefined routes */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
     </div>
   );

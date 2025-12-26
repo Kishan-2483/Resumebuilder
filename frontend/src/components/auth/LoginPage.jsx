@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const LoginPage = ({ onLogin, setCurrentPage }) => {
+const LoginPage = ({ onLogin }) => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
 
@@ -85,12 +86,12 @@ const LoginPage = ({ onLogin, setCurrentPage }) => {
                     <div className="mt-8 text-center border-t border-gray-100 pt-6">
                         <p className="text-gray-600">
                             Don't have an account?{' '}
-                            <button
-                                onClick={() => setCurrentPage('signup')}
+                            <Link
+                                to="/signup"
                                 className="text-blue-600 font-semibold hover:text-blue-700 transition-colors"
                             >
                                 Create Account
-                            </button>
+                            </Link>
                         </p>
                     </div>
                 </div>
