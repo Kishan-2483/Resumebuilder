@@ -24,10 +24,11 @@ const App = () => {
         handleLogout();
       }
     }
+  }, []); useEffect(() => {
+    // Force remove dark mode class from html element
+    document.documentElement.classList.remove('dark');
+    localStorage.removeItem('theme');
   }, []);
-
-
-
   const handleLogin = async (e, formData) => {
     try {
       const response = await fetch('/api/auth/login', {
@@ -109,7 +110,7 @@ const App = () => {
   };
 
   return (
-    <div className="font-sans text-gray-900 bg-white dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <div className="font-sans text-gray-900 bg-white transition-colors duration-300">
       <Navbar
         isAuthenticated={isAuthenticated}
         currentPage={currentPage}

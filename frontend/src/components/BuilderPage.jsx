@@ -240,7 +240,7 @@ const BuilderPage = ({ currentUser }) => {
                                         onClick={() => setTemplate(t)}
                                         className={`flex items-center justify-between px-4 py-3 rounded-lg border transition-all ${template === t
                                             ? 'border-blue-500 bg-blue-50 text-blue-700 ring-1 ring-blue-500'
-                                            : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                                            : 'border-gray-200 text-gray-700 hover:border-blue-300 hover:bg-gray-50'
                                             }`}
                                     >
                                         <span className="capitalize font-medium">{t}</span>
@@ -293,48 +293,48 @@ const BuilderPage = ({ currentUser }) => {
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div className="space-y-1">
-                                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide ml-1">Full Name</label>
+                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Full Name</label>
                                     <input
                                         type="text"
                                         value={formData.personalInfo.fullName}
                                         onChange={(e) => handleInputChange('personalInfo', 'fullName', e.target.value)}
-                                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                                        className="w-full px-4 py-2 bg-gray-50 text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide ml-1">Email</label>
+                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Email</label>
                                     <input
                                         type="email"
                                         value={formData.personalInfo.email}
                                         onChange={(e) => handleInputChange('personalInfo', 'email', e.target.value)}
-                                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                                        className="w-full px-4 py-2 bg-gray-50 text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide ml-1">Phone</label>
+                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Phone</label>
                                     <input
                                         type="tel"
                                         value={formData.personalInfo.phone}
                                         onChange={(e) => handleInputChange('personalInfo', 'phone', e.target.value)}
-                                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                                        className="w-full px-4 py-2 bg-gray-50 text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide ml-1">Location</label>
+                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Location</label>
                                     <input
                                         type="text"
                                         value={formData.personalInfo.location}
                                         onChange={(e) => handleInputChange('personalInfo', 'location', e.target.value)}
-                                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                                        className="w-full px-4 py-2 bg-gray-50 text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
                                     />
                                 </div>
                                 <div className="space-y-1 md:col-span-2">
-                                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide ml-1">Professional Summary</label>
+                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Professional Summary</label>
                                     <textarea
                                         value={formData.personalInfo.summary}
                                         onChange={(e) => handleInputChange('personalInfo', 'summary', e.target.value)}
                                         rows="4"
-                                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none resize-y"
+                                        className="w-full px-4 py-2 bg-gray-50 text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none resize-y"
                                     />
                                 </div>
                             </div>
@@ -371,14 +371,14 @@ const BuilderPage = ({ currentUser }) => {
                                                 placeholder="Company Name"
                                                 value={exp.company}
                                                 onChange={(e) => handleInputChange('experience', 'company', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Job Title"
                                                 value={exp.position}
                                                 onChange={(e) => handleInputChange('experience', 'position', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
                                             />
                                             <div className="space-y-1">
                                                 <label className="text-xs font-medium text-gray-600 ml-1">Start Date</label>
@@ -386,7 +386,7 @@ const BuilderPage = ({ currentUser }) => {
                                                     type="month"
                                                     value={exp.startDate}
                                                     onChange={(e) => handleInputChange('experience', 'startDate', e.target.value, idx)}
-                                                    className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                    className="w-full px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
                                                 />
                                             </div>
                                             <div className="space-y-1">
@@ -395,7 +395,7 @@ const BuilderPage = ({ currentUser }) => {
                                                     type="month"
                                                     value={exp.endDate}
                                                     onChange={(e) => handleInputChange('experience', 'endDate', e.target.value, idx)}
-                                                    className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                    className="w-full px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
                                                     placeholder="Leave empty for current position"
                                                 />
                                             </div>
@@ -404,7 +404,7 @@ const BuilderPage = ({ currentUser }) => {
                                                 value={exp.description}
                                                 onChange={(e) => handleInputChange('experience', 'description', e.target.value, idx)}
                                                 rows="3"
-                                                className="md:col-span-2 px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                className="md:col-span-2 px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
                                             />
                                         </div>
                                     </div>
@@ -477,28 +477,28 @@ const BuilderPage = ({ currentUser }) => {
                                                 placeholder="Institution / University"
                                                 value={edu.institution}
                                                 onChange={(e) => handleInputChange('education', 'institution', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Degree / Major"
                                                 value={edu.degree}
                                                 onChange={(e) => handleInputChange('education', 'degree', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Field of Study"
                                                 value={edu.field}
                                                 onChange={(e) => handleInputChange('education', 'field', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Graduation Year"
                                                 value={edu.graduationDate}
                                                 onChange={(e) => handleInputChange('education', 'graduationDate', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                             />
                                         </div>
                                     </div>
