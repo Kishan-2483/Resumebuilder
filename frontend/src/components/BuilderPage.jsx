@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import ModernTemplate from './templates/ModernTemplate';
+import ClassicTemplate from './templates/ClassicTemplate';
+import CreativeTemplate from './templates/CreativeTemplate';
 
 const BuilderPage = ({ currentUser }) => {
     const [template, setTemplate] = useState('modern');
@@ -7,6 +9,14 @@ const BuilderPage = ({ currentUser }) => {
     const [atsScore, setAtsScore] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
     const fileInputRef = useRef(null);
+
+    // Helper function to format date from YYYY-MM to readable format
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        const [year, month] = dateString.split('-');
+        const date = new Date(year, month - 1);
+        return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    };
 
     const [formData, setFormData] = useState({
         personalInfo: {
@@ -212,7 +222,9 @@ const BuilderPage = ({ currentUser }) => {
                             <span>📝</span> DOCX
                         </button>
                     </div>
-                    <ModernTemplate formData={formData} />
+                    {template === 'modern' && <ModernTemplate formData={formData} />}
+                    {template === 'classic' && <ClassicTemplate formData={formData} />}
+                    {template === 'creative' && <CreativeTemplate formData={formData} />}
                 </div>
             ) : (
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -368,20 +380,25 @@ const BuilderPage = ({ currentUser }) => {
                                                 onChange={(e) => handleInputChange('experience', 'position', e.target.value, idx)}
                                                 className="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
                                             />
-                                            <input
-                                                type="text"
-                                                placeholder="Start Date"
-                                                value={exp.startDate}
-                                                onChange={(e) => handleInputChange('experience', 'startDate', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
-                                            />
-                                            <input
-                                                type="text"
-                                                placeholder="End Date"
-                                                value={exp.endDate}
-                                                onChange={(e) => handleInputChange('experience', 'endDate', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
-                                            />
+                                            <div className="space-y-1">
+                                                <label className="text-xs font-medium text-gray-600 ml-1">Start Date</label>
+                                                <input
+                                                    type="month"
+                                                    value={exp.startDate}
+                                                    onChange={(e) => handleInputChange('experience', 'startDate', e.target.value, idx)}
+                                                    className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-xs font-medium text-gray-600 ml-1">End Date</label>
+                                                <input
+                                                    type="month"
+                                                    value={exp.endDate}
+                                                    onChange={(e) => handleInputChange('experience', 'endDate', e.target.value, idx)}
+                                                    className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                    placeholder="Leave empty for current position"
+                                                />
+                                            </div>
                                             <textarea
                                                 placeholder="Job Description & Achievements"
                                                 value={exp.description}

@@ -1,6 +1,14 @@
 import React from 'react';
 
 const ModernTemplate = ({ formData }) => {
+    // Helper function to format date from YYYY-MM to readable format
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        const [year, month] = dateString.split('-');
+        const date = new Date(year, month - 1);
+        return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    };
+
     return (
         <div className="bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto min-h-[1100px]" style={{ fontFamily: 'Inter, sans-serif' }}>
             {/* Header */}
@@ -68,7 +76,7 @@ const ModernTemplate = ({ formData }) => {
                                             <p className="text-blue-600 font-medium">{exp.company}</p>
                                         </div>
                                         <span className="text-gray-500 text-xs bg-gray-50 px-2 py-1 rounded border border-gray-100 font-medium whitespace-nowrap">
-                                            {exp.startDate} - {exp.endDate || 'Present'}
+                                            {formatDate(exp.startDate)} - {exp.endDate ? formatDate(exp.endDate) : 'Present'}
                                         </span>
                                     </div>
                                     <p className="text-gray-600 text-sm leading-relaxed mt-2 whitespace-pre-line">

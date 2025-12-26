@@ -10,6 +10,7 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState('landing');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     // Check for existing session
@@ -24,7 +25,28 @@ const App = () => {
         handleLogout();
       }
     }
+
+    // Load theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setDarkMode(true);
+    }
   }, []);
+
+  // Apply dark mode class to document
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   const handleLogin = async (e, formData) => {
     try {
@@ -107,13 +129,15 @@ const App = () => {
   };
 
   return (
-    <div className="font-sans text-gray-900 bg-white">
+    <div className="font-sans text-gray-900 bg-white dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
       <Navbar
         isAuthenticated={isAuthenticated}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         currentUser={currentUser}
         handleLogout={handleLogout}
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
       />
 
       <main>
