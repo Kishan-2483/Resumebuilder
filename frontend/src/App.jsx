@@ -10,7 +10,6 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState('landing');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     // Check for existing session
@@ -25,28 +24,9 @@ const App = () => {
         handleLogout();
       }
     }
-
-    // Load theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      setDarkMode(true);
-    }
   }, []);
 
-  // Apply dark mode class to document
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [darkMode]);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
 
   const handleLogin = async (e, formData) => {
     try {
@@ -136,8 +116,6 @@ const App = () => {
         setCurrentPage={setCurrentPage}
         currentUser={currentUser}
         handleLogout={handleLogout}
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
       />
 
       <main>

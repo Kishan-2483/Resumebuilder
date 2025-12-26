@@ -41,7 +41,7 @@ const SignupPage = ({ onSignup, setCurrentPage }) => {
                                 required
                                 value={formData.fullName}
                                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                                className="w-full px-5 py-3 bg-white/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                                className="w-full px-5 py-3 bg-white text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
                                 placeholder="Your name"
                             />
                         </div>
@@ -53,7 +53,7 @@ const SignupPage = ({ onSignup, setCurrentPage }) => {
                                 required
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className="w-full px-5 py-3 bg-white/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                                className="w-full px-5 py-3 bg-white text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
                                 placeholder="name@company.com"
                             />
                         </div>
@@ -66,7 +66,7 @@ const SignupPage = ({ onSignup, setCurrentPage }) => {
                                     required
                                     value={formData.password}
                                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                    className="w-full px-5 py-3 pr-12 bg-white/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                                    className="w-full px-5 py-3 pr-12 bg-white text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
                                     placeholder="••••••••"
                                 />
                                 <button
@@ -97,7 +97,7 @@ const SignupPage = ({ onSignup, setCurrentPage }) => {
                                     required
                                     value={formData.confirmPassword}
                                     onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                                    className="w-full px-5 py-3 pr-12 bg-white/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
+                                    className="w-full px-5 py-3 pr-12 bg-white text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
                                     placeholder="••••••••"
                                 />
                                 <button
