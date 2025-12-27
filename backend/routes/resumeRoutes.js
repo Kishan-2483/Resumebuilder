@@ -12,7 +12,10 @@ const authenticateToken = require('../middleware/auth');
 // Configure Multer for file uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const dir = './uploads';
+        // Use /tmp for Vercel's read-only filesystem
+        const isVercel = process.env.VERCEL === '1';
+        const dir = isVercel ? '/tmp/uploads' : './uploads';
+
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
         }
@@ -23,6 +26,7 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + '-' + file.originalname);
     }
 });
+
 
 const upload = multer({
     storage: storage,
