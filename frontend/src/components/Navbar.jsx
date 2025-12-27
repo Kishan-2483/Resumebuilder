@@ -6,72 +6,54 @@ const Navbar = ({ isAuthenticated, currentUser, handleLogout }) => {
     const navigate = useNavigate();
 
     const navLinkClass = ({ isActive }) =>
-        `text-sm font-medium transition-colors cursor-pointer ${isActive
-            ? 'text-blue-600 bg-blue-50 px-3 py-2 rounded-lg'
-            : 'text-gray-600 hover:text-blue-600 px-3 py-2'
+        `text-sm font-semibold transition-all duration-300 px-4 py-2 rounded-xl flex items-center gap-2 ${isActive
+            ? 'text-brand-600 bg-brand-50/50'
+            : 'text-slate-600 hover:text-brand-600 hover:bg-white/50'
         }`;
 
     return (
-        <nav className="fixed w-full z-50 transition-all duration-300 bg-white backdrop-blur-md border-b border-gray-200 shadow-sm">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-20">
+        <nav className="fixed top-4 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+                <div className="glass rounded-2xl px-6 py-3 flex justify-between items-center h-16 transition-all duration-500 hover:shadow-2xl">
                     {/* Logo */}
                     <Link
                         to={isAuthenticated ? '/builder' : '/'}
-                        className="flex items-center gap-3 cursor-pointer group"
+                        className="flex items-center gap-3 group"
                     >
-                        <div className="p-2.5 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl shadow-lg group-hover:shadow-blue-500/30 transition-all duration-300 group-hover:scale-105">
+                        <div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-indigo-600 rounded-xl shadow-lg shadow-brand-200 group-hover:shadow-brand-400 group-hover:scale-110 transition-all duration-500 flex items-center justify-center">
                             <span className="text-white text-xl">📄</span>
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-all">
-                                ResumeBuilder
+                            <span className="text-xl font-extrabold text-slate-900 tracking-tight group-hover:text-brand-600 transition-colors duration-300">
+                                RESUME<span className="text-brand-500">PRO</span>
                             </span>
-                            <span className="text-[10px] text-gray-500 font-medium tracking-wide uppercase">Pro Edition</span>
                         </div>
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center gap-4">
-                        <NavLink
-                            to="/"
-                            className={navLinkClass}
-                            end
-                        >
+                    <div className="hidden md:flex items-center gap-2">
+                        <NavLink to="/" className={navLinkClass} end>
                             Home
                         </NavLink>
 
-                        {!isAuthenticated && (
-                            <button
-                                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors px-3 py-2"
-                            >
-                                Features
-                            </button>
-                        )}
-
                         {isAuthenticated ? (
-                            <div className="flex items-center gap-6">
-                                <NavLink
-                                    to="/builder"
-                                    className={navLinkClass}
-                                >
-                                    My Resumes
+                            <>
+                                <NavLink to="/builder" className={navLinkClass}>
+                                    Builder
                                 </NavLink>
-
-                                <div className="flex items-center gap-3 pl-6 border-l border-gray-200 dark:border-gray-700">
-                                    <div className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-full border border-gray-100">
-                                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 flex items-center justify-center text-sm border border-white shadow-sm">
-                                            👤
+                                <div className="w-px h-6 bg-slate-200 mx-2"></div>
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-2 pl-2">
+                                        <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-100 to-indigo-100 flex items-center justify-center border-2 border-white shadow-sm overflow-hidden">
+                                            <span className="text-xs font-bold text-brand-700">{currentUser?.name?.charAt(0) || 'U'}</span>
                                         </div>
-                                        <span className="text-sm font-medium text-gray-700">
+                                        <span className="text-sm font-semibold text-slate-700 hidden lg:block">
                                             {currentUser?.name || 'User'}
                                         </span>
                                     </div>
-
                                     <button
                                         onClick={handleLogout}
-                                        className="p-2 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50"
+                                        className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all duration-300"
                                         title="Logout"
                                     >
                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,18 +61,18 @@ const Navbar = ({ isAuthenticated, currentUser, handleLogout }) => {
                                         </svg>
                                     </button>
                                 </div>
-                            </div>
+                            </>
                         ) : (
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-4 ml-4">
                                 <Link
                                     to="/login"
-                                    className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+                                    className="text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors"
                                 >
-                                    Log In
+                                    Login
                                 </Link>
                                 <Link
                                     to="/signup"
-                                    className="px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-xl hover:bg-gray-800 transition-all shadow-lg shadow-gray-200 hover:shadow-xl hover:-translate-y-0.5"
+                                    className="px-6 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-xl hover:bg-brand-600 hover:shadow-lg hover:shadow-brand-200 transition-all duration-300 transform hover:-translate-y-1"
                                 >
                                     Get Started
                                 </Link>
@@ -101,76 +83,70 @@ const Navbar = ({ isAuthenticated, currentUser, handleLogout }) => {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="md:hidden p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+                        className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-all"
                     >
-                        {mobileMenuOpen ? (
-                            <span className="text-xl">✕</span>
-                        ) : (
-                            <span className="text-xl">☰</span>
-                        )}
+                        <div className="w-6 h-6 flex flex-col justify-center gap-1.5">
+                            <span className={`block h-0.5 bg-slate-800 transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                            <span className={`block h-0.5 bg-slate-800 transition-all duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
+                            <span className={`block h-0.5 bg-slate-800 transition-all duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                        </div>
                     </button>
                 </div>
             </div>
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-                <div className="md:hidden absolute w-full bg-white border-b border-gray-100 shadow-xl animate-in slide-in-from-top-2">
-                    <div className="px-4 py-6 space-y-4">
+                <div className="md:hidden mt-2">
+                    <div className="glass rounded-2xl p-6 space-y-4 shadow-2xl animate-in fade-in zoom-in duration-300">
                         {!isAuthenticated ? (
                             <>
                                 <NavLink
                                     to="/"
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="block w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl"
+                                    className="block px-4 py-3 text-slate-600 font-semibold hover:bg-slate-50 rounded-xl"
                                     end
                                 >
                                     Home
                                 </NavLink>
-                                <div className="h-px bg-gray-100 my-2"></div>
-                                <NavLink
+                                <Link
                                     to="/login"
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="block w-full text-center px-4 py-3 text-gray-700 font-medium hover:bg-gray-50 rounded-xl border border-gray-200"
+                                    className="block px-4 py-3 text-slate-600 font-semibold text-center border border-slate-200 rounded-xl"
                                 >
-                                    Log In
-                                </NavLink>
-                                <NavLink
+                                    Login
+                                </Link>
+                                <Link
                                     to="/signup"
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="block w-full text-center px-4 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-200"
+                                    className="block px-4 py-3 bg-brand-600 text-white font-bold text-center rounded-xl shadow-lg shadow-brand-100"
                                 >
-                                    Get Started Free
-                                </NavLink>
+                                    Sign Up
+                                </Link>
                             </>
                         ) : (
                             <>
-                                <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl mb-4">
-                                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
-                                        👤
-                                    </div>
+                                <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                                    <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm text-xl">👤</div>
                                     <div>
-                                        <p className="font-medium text-gray-900">{currentUser?.name}</p>
-                                        <p className="text-xs text-gray-500">{currentUser?.email}</p>
+                                        <p className="font-bold text-slate-900">{currentUser?.name}</p>
+                                        <p className="text-xs text-slate-500">{currentUser?.email}</p>
                                     </div>
                                 </div>
                                 <NavLink
                                     to="/builder"
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className={({ isActive }) =>
-                                        `block w-full text-left px-4 py-3 rounded-xl font-medium ${isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-600 hover:bg-gray-50'
-                                        }`
-                                    }
+                                    className="block px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 rounded-xl"
                                 >
-                                    My Resumes
+                                    Builder
                                 </NavLink>
                                 <button
                                     onClick={() => {
                                         handleLogout();
                                         setMobileMenuOpen(false);
                                     }}
-                                    className="block w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl font-medium"
+                                    className="w-full text-left px-4 py-3 text-red-600 font-bold hover:bg-red-50 rounded-xl"
                                 >
-                                    Sign Out
+                                    Logout
                                 </button>
                             </>
                         )}
@@ -182,3 +158,4 @@ const Navbar = ({ isAuthenticated, currentUser, handleLogout }) => {
 };
 
 export default Navbar;
+

@@ -5,109 +5,56 @@ const LandingPage = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen mesh-bg selection:bg-brand-200">
             {/* Hero Section */}
-            <section className="relative overflow-hidden pt-20 pb-32">
-                {/* Dynamic Background */}
-                <div className="absolute inset-0 bg-white">
-                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50 via-white to-white opacity-70"></div>
-                    <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-b from-purple-50 to-transparent rounded-full blur-3xl opacity-60 transform translate-x-1/4 -translate-y-1/4"></div>
+            <section className="relative overflow-hidden pt-32 pb-32">
+                {/* Animated Background Shapes */}
+                <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                    <div className="absolute top-[10%] left-[5%] w-72 h-72 bg-brand-200/40 rounded-full blur-3xl animate-float"></div>
+                    <div className="absolute top-[40%] right-[10%] w-96 h-96 bg-indigo-200/40 rounded-full blur-3xl animate-float" style={{ animationDelay: '-2s' }}></div>
+                    <div className="absolute bottom-[10%] left-[20%] w-64 h-64 bg-purple-200/40 rounded-full blur-3xl animate-float" style={{ animationDelay: '-4s' }}></div>
                 </div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center pt-16">
-                        <div className="space-y-8 animate-in slide-in-from-left-4 duration-700">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full border border-blue-100 shadow-sm">
-                                <span className="animate-pulse text-blue-600">✨</span>
-                                <span className="text-blue-700 font-semibold text-sm tracking-wide">AI-Powered Resume Builder</span>
-                            </div>
-
-                            <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-[1.1] tracking-tight">
-                                Build Your <br />
-                                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Dream Career</span>
-                            </h1>
-
-                            <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-                                Create professional, ATS-optimized resumes in minutes. Join thousands of professionals landing interviews at top companies.
-                            </p>
-
-                            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                                <button
-                                    onClick={() => navigate('/signup')}
-                                    className="group relative px-8 py-4 bg-gray-900 text-white rounded-xl font-semibold text-lg shadow-xl shadow-gray-200 overflow-hidden transition-all hover:-translate-y-1 hover:shadow-2xl"
-                                >
-                                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                    <span className="relative flex items-center gap-2">
-                                        Get Started Free
-                                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                        </svg>
-                                    </span>
-                                </button>
-                                <button
-                                    onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-                                    className="px-8 py-4 bg-white text-gray-700 rounded-xl font-semibold text-lg border border-gray-200 shadow-sm hover:bg-gray-50 transition-all hover:border-gray-300"
-                                >
-                                    Learn More
-                                </button>
-                            </div>
-
-                            <div className="flex items-center gap-8 pt-8 border-t border-gray-100">
-                                <div className="flex -space-x-4">
-                                    {[1, 2, 3, 4].map((i) => (
-                                        <div key={i} className={`w-10 h-10 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600 bg-gradient-to-br from-gray-100 to-gray-200`}>
-                                            👨‍🎓
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="text-sm">
-                                    <p className="font-bold text-gray-900">Trusted by 10,000+</p>
-                                    <p className="text-gray-500">Job seekers worldwide</p>
-                                </div>
-                            </div>
+                    <div className="flex flex-col items-center text-center space-y-10">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full border border-white/50 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                            <span className="text-brand-600 font-bold text-sm tracking-wider uppercase">✨ Next Gen Resume Builder</span>
                         </div>
 
-                        <div className="relative lg:h-[600px] flex items-center justify-center animate-in slide-in-from-right-4 duration-1000">
-                            <div className="absolute inset-0 bg-gradient-to-tr from-blue-100 to-purple-100 rounded-[3rem] transform rotate-3 scale-95 blur-2xl opacity-60"></div>
-                            <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-100 p-2 transform -rotate-2 hover:rotate-0 transition-transform duration-500 w-full max-w-md">
-                                <div className="bg-gray-50 rounded-xl overflow-hidden aspect-[3/4] relative">
-                                    {/* Mock UI for Resume */}
-                                    <div className="p-8 space-y-6 opacity-80">
-                                        <div className="w-24 h-24 rounded-full bg-gray-200 mx-auto mb-6">👨‍🎓</div>
-                                        <div className="h-4 bg-gray-300 rounded w-3/4 mx-auto">🏫</div>
-                                        <div className="h-3 bg-gray-200 rounded w-1/2 mx-auto"></div>
-                                        <div className="border-t border-gray-200 pt-6 space-y-3">
-                                            <div className="h-3 bg-gray-200 rounded w-full">🤖</div>
-                                            <div className="h-3 bg-gray-200 rounded w-5/6">🚀</div>
-                                            <div className="h-3 bg-gray-200 rounded w-4/6">🚀</div>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-4 pt-4">
-                                            <div className="h-20 bg-blue-50 rounded-lg">🌐</div>
-                                            <div className="h-20 bg-purple-50 rounded-lg"></div>
-                                        </div>
-                                    </div>
+                        <h1 className="text-6xl md:text-8xl font-black text-slate-900 leading-[1] tracking-tighter max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
+                            Elevate Your <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-600">Career Path</span>
+                        </h1>
 
-                                    {/* Floating Cards */}
-                                    <div className="absolute top-10 right-4 bg-white p-4 rounded-xl shadow-lg border border-green-100 flex items-center gap-3 animate-bounce shadow-green-100">
-                                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600">
-                                            ✓
-                                        </div>
-                                        <div>
-                                            <p className="text-xs text-gray-500">ATS Score</p>
-                                            <p className="font-bold text-green-600">98/100</p>
-                                        </div>
-                                    </div>
+                        <p className="text-xl text-slate-600 max-w-2xl leading-relaxed animate-in fade-in slide-in-from-bottom-12 duration-1000">
+                            Stop struggling with formatting. Use our AI-powered engine to build resumes that land jobs at Fortune 500 companies.
+                        </p>
 
-                                    <div className="absolute bottom-10 left-4 bg-white p-4 rounded-xl shadow-lg border border-gray-100 flex items-center gap-3 animate-pulse">
-                                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
-                                            💼
-                                        </div>
-                                        <div>
-                                            <p className="text-xs text-gray-500">Interviews</p>
-                                            <p className="font-bold text-gray-900">+300%</p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div className="flex flex-col sm:flex-row gap-6 pt-4 animate-in fade-in slide-in-from-bottom-16 duration-1000">
+                            <button
+                                onClick={() => navigate('/signup')}
+                                className="px-10 py-5 bg-slate-900 text-white rounded-2xl font-bold text-lg shadow-2xl hover:bg-brand-600 hover:shadow-brand-300 transition-all duration-500 transform hover:-translate-y-2 flex items-center gap-3"
+                            >
+                                Start Building Now
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
+                            </button>
+                            <button
+                                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                                className="px-10 py-5 glass text-slate-700 rounded-2xl font-bold text-lg hover:bg-white transition-all duration-500 transform hover:-translate-y-1"
+                            >
+                                Learn More
+                            </button>
+                        </div>
+
+                        {/* Social Proof */}
+                        <div className="pt-20 border-t border-slate-200/50 w-full max-w-4xl">
+                            <p className="text-xs font-bold text-slate-400 tracking-[0.2em] mb-10 uppercase">Trusted by Candidates at</p>
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-10 opacity-40 grayscale hover:grayscale-0 transition-all duration-1000 items-center">
+                                {['Google', 'Airbnb', 'Spotify', 'Amazon', 'Tesla'].map((company) => (
+                                    <span key={company} className="text-2xl font-black text-slate-900 select-none tracking-tighter">{company}</span>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -115,97 +62,80 @@ const LandingPage = () => {
             </section>
 
             {/* Features Section */}
-            <section id="features" className="py-24 bg-gray-50">
+            <section id="features" className="py-32 relative bg-white/50 backdrop-blur-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-sm font-semibold text-blue-600 uppercase tracking-widest mb-3">Why Choose Us</h2>
-                        <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Everything You Need to Succeed</h3>
-                        <p className="text-lg text-gray-600">
-                            Our platform provides powerful tools designed to help you build a resume that stands out and passes ATS filters.
+                    <div className="text-center max-w-3xl mx-auto mb-20">
+                        <h2 className="text-brand-600 font-black tracking-widest text-sm uppercase mb-4">Core Engine</h2>
+                        <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">Designed for Impact</h3>
+                        <p className="text-lg text-slate-600 font-medium">
+                            Every feature is meticulously crafted to give you a competitive edge in the job market.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-3 gap-10">
                         {[
                             {
-                                icon: "⚡",
-                                title: "Lightning Fast",
-                                desc: "Create a professional resume in under 10 minutes with our easy-to-use builder.",
-                                color: "blue"
+                                icon: "🚀",
+                                title: "AI Generation",
+                                desc: "Smart layout engine that adapts to your content and highlights your strengths automatically.",
+                                color: "brand"
                             },
                             {
                                 icon: "🎯",
-                                title: "ATS Optimized",
-                                desc: "Real-time feedback ensures your resume is readable by Applicant Tracking Systems.",
-                                color: "purple"
+                                title: "ATS Check",
+                                desc: "Real-time industry-standard scanning ensuring your resume never gets lost in the pile.",
+                                color: "indigo"
                             },
                             {
-                                icon: "🎨",
-                                title: "Premium Designs",
-                                desc: "Choose from a collection of modern, professionally designed templates.",
-                                color: "pink"
+                                icon: "💎",
+                                title: "Premium Templates",
+                                desc: "Designed by expert career coaches and recruiters for maximum readability and conversion.",
+                                color: "purple"
                             }
                         ].map((feature, idx) => (
-                            <div key={idx} className="group p-8 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-6 bg-${feature.color}-50 text-${feature.color}-600 group-hover:scale-110 transition-transform`}>
+                            <div key={idx} className="group glass p-10 rounded-[2.5rem] hover:bg-white hover:shadow-2xl hover:-translate-y-4 transition-all duration-700">
+                                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
                                     {feature.icon}
                                 </div>
-                                <h4 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h4>
-                                <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+                                <h4 className="text-2xl font-bold text-slate-900 mb-4">{feature.title}</h4>
+                                <p className="text-slate-600 leading-relaxed font-medium">{feature.desc}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Social Proof */}
-            <section className="py-20 bg-white border-t border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 text-center">
-                    <p className="text-gray-500 font-medium mb-8">TRUSTED BY PROFESSIONALS AT</p>
-                    <div className="flex flex-wrap justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-                        {['Google', 'Microsoft', 'Amazon', 'Meta', 'Netflix'].map((company) => (
-                            <span key={company} className="text-2xl font-bold text-gray-400 hover:text-gray-900 cursor-default">{company}</span>
-                        ))}
+            {/* CTA Section */}
+            <section className="py-24 px-4">
+                <div className="max-w-6xl mx-auto bg-slate-900 rounded-[3rem] p-12 md:p-20 relative overflow-hidden text-center">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-brand-600/20 to-purple-600/20"></div>
+                    <div className="relative z-10 space-y-8">
+                        <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight">Ready to Land Your <br /><span className="text-brand-400 font-black italic">Next Big Role?</span></h2>
+                        <p className="text-slate-400 text-lg max-w-xl mx-auto">Join over 50,000 professionals who transformed their careers using our platform.</p>
+                        <button
+                            onClick={() => navigate('/signup')}
+                            className="px-10 py-5 bg-brand-500 text-white rounded-2xl font-bold text-lg hover:bg-brand-400 transition-all duration-300 shadow-xl shadow-brand-500/20"
+                        >
+                            Get Started Instantly
+                        </button>
                     </div>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-white py-12 border-t border-gray-800">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid md:grid-cols-4 gap-12">
-                        <div className="col-span-2">
-                            <div className="flex items-center gap-2 mb-6">
-                                <span className="text-2xl">📄</span>
-                                <span className="text-xl font-bold">ResumeBuilder Pro</span>
-                            </div>
-                            <p className="text-gray-400 max-w-sm">
-                                Empowering professionals to advance their careers with cutting-edge resume building technology.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 className="font-bold mb-6 text-gray-200">Product</h4>
-                            <ul className="space-y-4 text-gray-400">
-                                <li className="hover:text-white cursor-pointer transition-colors">Features</li>
-                                <li className="hover:text-white cursor-pointer transition-colors">Templates</li>
-                                <li className="hover:text-white cursor-pointer transition-colors">Pricing</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-bold mb-6 text-gray-200">Legal</h4>
-                            <ul className="space-y-4 text-gray-400">
-                                <li className="hover:text-white cursor-pointer transition-colors">Privacy</li>
-                                <li className="hover:text-white cursor-pointer transition-colors">Terms</li>
-                            </ul>
-                        </div>
+            <footer className="py-20 border-t border-slate-200">
+                <div className="max-w-7xl mx-auto px-4 text-center">
+                    <div className="flex items-center justify-center gap-3 mb-8">
+                        <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white">📄</div>
+                        <span className="text-xl font-black tracking-tighter">RESUMEPRO</span>
                     </div>
-                    <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
-                        <p>© 2024 ResumeBuilder Pro. All rights reserved.</p>
-                    </div>
+                    <p className="text-slate-500 text-sm font-medium mb-4 italic">Crafted with ❤️ for career growth.</p>
+                    <p className="text-slate-400 text-xs">© 2025 ResumePro Edition. All rights reserved.</p>
                 </div>
             </footer>
         </div>
     );
 };
+
 
 export default LandingPage;

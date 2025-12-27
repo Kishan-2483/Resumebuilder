@@ -164,96 +164,106 @@ const BuilderPage = ({ currentUser }) => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen mesh-bg pt-28 pb-20 selection:bg-brand-200">
+            {/* Visual Mode Toggle & Header */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+                <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-6">
+                    <div className="space-y-1">
+                        <h1 className="text-4xl font-black text-slate-900 tracking-tight">Design Workspace</h1>
+                        <p className="text-slate-500 font-medium">Crafting your professional identity</p>
+                    </div>
 
-            {/* Visual Mode Toggle */}
-            <div className="max-w-7xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                <h1 className="text-3xl font-bold text-gray-900">Resume Builder</h1>
+                    <div className="flex items-center gap-4 bg-white/50 backdrop-blur-md p-1.5 rounded-2xl border border-white shadow-sm">
+                        <button
+                            onClick={() => setShowPreview(false)}
+                            className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${!showPreview ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-600 hover:bg-white'}`}
+                        >
+                            ✏️ Editor
+                        </button>
+                        <button
+                            onClick={() => setShowPreview(true)}
+                            className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${showPreview ? 'bg-brand-600 text-white shadow-lg' : 'text-slate-600 hover:bg-white'}`}
+                        >
+                            👁️ Preview
+                        </button>
+                    </div>
 
-                <div className="flex items-center bg-white p-1 rounded-lg border border-gray-200 shadow-sm">
-                    <button
-                        onClick={() => setShowPreview(false)}
-                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${!showPreview ? 'bg-blue-100 text-blue-700 shadow-sm' : 'text-gray-600 hover:bg-gray-50'}`}
-                    >
-                        ✏️ Editor
-                    </button>
-                    <button
-                        onClick={() => setShowPreview(true)}
-                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${showPreview ? 'bg-purple-100 text-purple-700 shadow-sm' : 'text-gray-600 hover:bg-gray-50'}`}
-                    >
-                        👁️ Preview
-                    </button>
-                </div>
-
-                <div className="flex gap-2">
-                    <button
-                        onClick={saveToDatabase}
-                        disabled={isSaving}
-                        className={`flex items-center gap-2 px-5 py-2.5 text-white rounded-lg shadow-md transition-all ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700 hover:shadow-lg hover:-translate-y-0.5'
-                            }`}
-                    >
-                        {isSaving ? (
-                            <>
-                                <span className="animate-spin">⌛</span> Saving...
-                            </>
-                        ) : (
-                            <>
-                                <span>💾</span> Save Resume
-                            </>
-                        )}
-                    </button>
+                    <div className="flex gap-3">
+                        <button
+                            onClick={saveToDatabase}
+                            disabled={isSaving}
+                            className={`group flex items-center gap-2 px-6 py-3 text-white rounded-2xl font-bold shadow-xl transition-all duration-300 ${isSaving ? 'bg-slate-400 cursor-not-allowed' : 'bg-slate-900 hover:bg-brand-600 transform hover:-translate-y-1'}`}
+                        >
+                            {isSaving ? (
+                                <>
+                                    <span className="animate-spin text-xl">⌛</span>
+                                    <span>Syncing...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="group-hover:rotate-12 transition-transform">💾</span>
+                                    <span>Save & Deploy</span>
+                                </>
+                            )}
+                        </button>
+                    </div>
                 </div>
             </div>
 
             {showPreview ? (
-                <div className="max-w-7xl mx-auto animate-in fade-in duration-500">
-                    <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-6 flex justify-end gap-3 sticky top-24 z-30">
-                        <span className="text-sm font-medium text-gray-500 self-center mr-auto">Standard PDF/DOCX Export</span>
-                        <button
-                            onClick={() => downloadResume('pdf')}
-                            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 font-medium transition-colors"
-                        >
-                            <span>📄</span> PDF
-                        </button>
-                        <button
-                            onClick={() => downloadResume('docx')}
-                            className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 border border-blue-200 rounded-lg hover:bg-blue-100 font-medium transition-colors"
-                        >
-                            <span>📝</span> DOCX
-                        </button>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-in fade-in zoom-in duration-500">
+                    <div className="glass p-4 rounded-2xl mb-8 flex justify-between items-center sticky top-28 z-30">
+                        <div className="flex items-center gap-4 pl-4">
+                            <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+                            <span className="text-sm font-bold text-slate-600 uppercase tracking-widest">Live Document Preview</span>
+                        </div>
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => downloadResume('pdf')}
+                                className="flex items-center gap-2 px-6 py-2.5 bg-red-50 text-red-600 border border-red-100 rounded-xl hover:bg-red-600 hover:text-white font-bold transition-all duration-300"
+                            >
+                                <span>📄</span> PDF Export
+                            </button>
+                        </div>
                     </div>
-                    {template === 'modern' && <ModernTemplate formData={formData} />}
-                    {template === 'classic' && <ClassicTemplate formData={formData} />}
-                    {template === 'creative' && <CreativeTemplate formData={formData} />}
+                    <div className="shadow-2xl rounded-2xl overflow-hidden border border-white/50 bg-white">
+                        {template === 'modern' && <ModernTemplate formData={formData} />}
+                        {template === 'classic' && <ClassicTemplate formData={formData} />}
+                        {template === 'creative' && <CreativeTemplate formData={formData} />}
+                    </div>
                 </div>
             ) : (
-                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
                     {/* Editor Sidebar */}
-                    <div className="lg:col-span-1 space-y-6">
+                    <div className="lg:col-span-4 space-y-8">
                         {/* Templates */}
-                        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                            <h3 className="text-lg font-bold text-gray-800 mb-4">Template</h3>
+                        <div className="glass rounded-[2rem] p-8">
+                            <h3 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
+                                <span className="text-2xl">✨</span> Templates
+                            </h3>
                             <div className="grid grid-cols-1 gap-3">
                                 {['modern', 'classic', 'creative'].map((t) => (
                                     <button
                                         key={t}
                                         onClick={() => setTemplate(t)}
-                                        className={`flex items-center justify-between px-4 py-3 rounded-lg border transition-all ${template === t
-                                            ? 'border-blue-500 bg-blue-50 text-blue-700 ring-1 ring-blue-500'
-                                            : 'border-gray-200 text-gray-700 hover:border-blue-300 hover:bg-gray-50'
+                                        className={`group flex items-center justify-between px-6 py-4 rounded-2xl border-2 transition-all duration-300 ${template === t
+                                            ? 'border-brand-500 bg-brand-50/50 text-brand-700 shadow-lg shadow-brand-100'
+                                            : 'border-white bg-white/50 text-slate-600 hover:border-brand-200 hover:bg-white'
                                             }`}
                                     >
-                                        <span className="capitalize font-medium">{t}</span>
-                                        {template === t && <span className="text-blue-500">✓</span>}
+                                        <span className="capitalize font-bold text-lg">{t}</span>
+                                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${template === t ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-200 group-hover:border-brand-300'}`}>
+                                            {template === t && <span className="text-xs">✓</span>}
+                                        </div>
                                     </button>
                                 ))}
                             </div>
                         </div>
 
                         {/* Functionality: ATS Score */}
-                        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                            <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                                <span>📊</span> ATS Optimizer
+                        <div className="glass rounded-[2rem] p-8 border-brand-100 bg-gradient-to-br from-white/80 to-brand-50/50">
+                            <h3 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
+                                <span className="text-2xl">📊</span> ATS Intelligence
                             </h3>
 
                             <button
@@ -261,22 +271,27 @@ const BuilderPage = ({ currentUser }) => {
                                     const score = calculateATS(formData);
                                     setAtsScore(score);
                                 }}
-                                className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-semibold shadow-md mb-4"
+                                className="w-full px-6 py-4 bg-slate-900 text-white rounded-2xl hover:bg-brand-600 transition-all duration-300 font-bold shadow-xl shadow-slate-200 mb-6 group"
                             >
-                                Check My Score
+                                <span className="flex items-center justify-center gap-2">
+                                    Analyze Performance
+                                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                                </span>
                             </button>
 
                             {atsScore !== null && (
-                                <div className="animate-in slide-in-from-top-2">
-                                    <div className="flex justify-between items-center mb-2">
-                                        <span className="text-sm font-semibold text-gray-600">Current Score</span>
-                                        <span className={`text-2xl font-bold ${atsScore >= 70 ? 'text-green-600' : 'text-orange-500'}`}>{atsScore}/100</span>
+                                <div className="space-y-4 animate-in slide-in-from-bottom-4 duration-500">
+                                    <div className="flex justify-between items-end">
+                                        <div>
+                                            <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Optimization Score</p>
+                                            <span className={`text-5xl font-black ${atsScore >= 70 ? 'text-brand-600' : 'text-orange-500'}`}>{atsScore}<span className="text-xl opacity-40">/100</span></span>
+                                        </div>
                                     </div>
-                                    <div className="w-full bg-gray-100 rounded-full h-2.5 mb-2">
-                                        <div className={`h-2.5 rounded-full transition-all duration-1000 ${atsScore >= 70 ? 'bg-green-500' : 'bg-orange-500'}`} style={{ width: `${atsScore}%` }}></div>
+                                    <div className="w-full bg-slate-200/50 rounded-full h-3 overflow-hidden">
+                                        <div className={`h-full rounded-full transition-all duration-1000 ${atsScore >= 70 ? 'bg-brand-500' : 'bg-orange-500'}`} style={{ width: `${atsScore}%` }}></div>
                                     </div>
-                                    <p className="text-xs text-gray-500">
-                                        {atsScore >= 70 ? 'Generaly Good! Ready for application.' : 'Missing key sections. Add Experience, Skills, and Summary.'}
+                                    <p className="text-sm font-semibold text-slate-500 leading-relaxed italic">
+                                        {atsScore >= 70 ? '"Excellent clarity and structure. You\'re in the top 5% of candidates."' : '"Missing key impact metrics. Add more achievements to stand out."'}
                                     </p>
                                 </div>
                             )}
@@ -284,127 +299,115 @@ const BuilderPage = ({ currentUser }) => {
                     </div>
 
                     {/* Main Form Area */}
-                    <div className="lg:col-span-2 space-y-6">
+                    <div className="lg:col-span-8 space-y-10">
                         {/* Personal Info */}
-                        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                            <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2 pb-4 border-b border-gray-100">
-                                <span className="bg-blue-100 text-blue-600 p-2 rounded-lg text-lg">👤</span>
-                                Personal Information
-                            </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div className="space-y-1">
-                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Full Name</label>
-                                    <input
-                                        type="text"
-                                        value={formData.personalInfo.fullName}
-                                        onChange={(e) => handleInputChange('personalInfo', 'fullName', e.target.value)}
-                                        className="w-full px-4 py-2 bg-gray-50 text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                                    />
+                        <div className="glass rounded-[2rem] p-10">
+                            <div className="flex items-center gap-4 mb-10">
+                                <div className="w-14 h-14 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm">👤</div>
+                                <div>
+                                    <h2 className="text-2xl font-black text-slate-900">Personal Brand</h2>
+                                    <p className="text-slate-500 font-medium">Your primary identification details</p>
                                 </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Email</label>
-                                    <input
-                                        type="email"
-                                        value={formData.personalInfo.email}
-                                        onChange={(e) => handleInputChange('personalInfo', 'email', e.target.value)}
-                                        className="w-full px-4 py-2 bg-gray-50 text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                                    />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Phone</label>
-                                    <input
-                                        type="tel"
-                                        value={formData.personalInfo.phone}
-                                        onChange={(e) => handleInputChange('personalInfo', 'phone', e.target.value)}
-                                        className="w-full px-4 py-2 bg-gray-50 text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                                    />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Location</label>
-                                    <input
-                                        type="text"
-                                        value={formData.personalInfo.location}
-                                        onChange={(e) => handleInputChange('personalInfo', 'location', e.target.value)}
-                                        className="w-full px-4 py-2 bg-gray-50 text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                                    />
-                                </div>
-                                <div className="space-y-1 md:col-span-2">
-                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Professional Summary</label>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                {[
+                                    { label: "Full Name", field: "fullName", type: "text", placeholder: "John Doe" },
+                                    { label: "Professional Email", field: "email", type: "email", placeholder: "john@example.com" },
+                                    { label: "Phone Number", field: "phone", type: "tel", placeholder: "+1 234 567 890" },
+                                    { label: "Office/Location", field: "location", type: "text", placeholder: "New York, USA" }
+                                ].map((input) => (
+                                    <div key={input.field} className="group space-y-2">
+                                        <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">{input.label}</label>
+                                        <input
+                                            type={input.type}
+                                            placeholder={input.placeholder}
+                                            value={formData.personalInfo[input.field]}
+                                            onChange={(e) => handleInputChange('personalInfo', input.field, e.target.value)}
+                                            className="w-full px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-brand-500 focus:ring-4 focus:ring-brand-50/50 transition-all outline-none font-semibold text-slate-900 placeholder:text-slate-300 shadow-sm"
+                                        />
+                                    </div>
+                                ))}
+                                <div className="space-y-2 md:col-span-2">
+                                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Professional Impact Statement</label>
                                     <textarea
+                                        placeholder="Briefly describe your core expertise and what you bring to the table..."
                                         value={formData.personalInfo.summary}
                                         onChange={(e) => handleInputChange('personalInfo', 'summary', e.target.value)}
                                         rows="4"
-                                        className="w-full px-4 py-2 bg-gray-50 text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none resize-y"
+                                        className="w-full px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-brand-500 focus:ring-4 focus:ring-brand-50/50 transition-all outline-none font-semibold text-slate-900 placeholder:text-slate-300 shadow-sm resize-none"
                                     />
                                 </div>
                             </div>
                         </div>
 
                         {/* Experience */}
-                        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                            <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
-                                <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                                    <span className="bg-purple-100 text-purple-600 p-2 rounded-lg text-lg">💼</span>
-                                    Experience
-                                </h2>
+                        <div className="glass rounded-[2rem] p-10">
+                            <div className="flex justify-between items-center mb-10">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm">💼</div>
+                                    <div>
+                                        <h2 className="text-2xl font-black text-slate-900">Career History</h2>
+                                        <p className="text-slate-500 font-medium">Your journey through different roles</p>
+                                    </div>
+                                </div>
                                 <button
                                     onClick={() => addSection('experience')}
-                                    className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 font-medium text-sm transition-colors"
+                                    className="px-5 py-2.5 bg-brand-50 text-brand-600 rounded-xl hover:bg-brand-600 hover:text-white font-bold text-sm transition-all duration-300 shadow-sm"
                                 >
-                                    <span>➕</span> Add Position
+                                    + Add Role
                                 </button>
                             </div>
 
-                            <div className="space-y-6">
+                            <div className="space-y-8">
                                 {formData.experience.map((exp, idx) => (
-                                    <div key={idx} className="p-5 bg-gray-50/50 border border-gray-200 rounded-xl relative group hover:border-purple-200 transition-colors">
+                                    <div key={idx} className="p-8 bg-white/50 border-2 border-slate-100 rounded-[2rem] relative group hover:border-brand-200 hover:bg-white transition-all duration-500 shadow-sm">
                                         <button
                                             onClick={() => removeSection('experience', idx)}
-                                            className="absolute top-4 right-4 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 bg-white rounded-full shadow-sm"
-                                            title="Remove"
+                                            className="absolute -top-3 -right-3 w-10 h-10 bg-white shadow-lg rounded-full text-red-500 flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-50 transition-all z-10 border border-slate-100"
+                                            title="Delete"
                                         >
-                                            🗑️
+                                            ✕
                                         </button>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <input
                                                 type="text"
                                                 placeholder="Company Name"
                                                 value={exp.company}
                                                 onChange={(e) => handleInputChange('experience', 'company', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                className="px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-indigo-500 outline-none font-bold text-slate-900"
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Job Title"
                                                 value={exp.position}
                                                 onChange={(e) => handleInputChange('experience', 'position', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                className="px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-indigo-500 outline-none font-bold text-slate-900"
                                             />
                                             <div className="space-y-1">
-                                                <label className="text-xs font-medium text-gray-600 ml-1">Start Date</label>
+                                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Period From</label>
                                                 <input
                                                     type="month"
                                                     value={exp.startDate}
                                                     onChange={(e) => handleInputChange('experience', 'startDate', e.target.value, idx)}
-                                                    className="w-full px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                    className="w-full px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-indigo-500 outline-none font-bold text-slate-900"
                                                 />
                                             </div>
                                             <div className="space-y-1">
-                                                <label className="text-xs font-medium text-gray-600 ml-1">End Date</label>
+                                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Period To</label>
                                                 <input
                                                     type="month"
                                                     value={exp.endDate}
                                                     onChange={(e) => handleInputChange('experience', 'endDate', e.target.value, idx)}
-                                                    className="w-full px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
-                                                    placeholder="Leave empty for current position"
+                                                    className="w-full px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-indigo-500 outline-none font-bold text-slate-900"
                                                 />
                                             </div>
                                             <textarea
-                                                placeholder="Job Description & Achievements"
+                                                placeholder="What were your key achievements? Use action verbs (e.g., Developed, Managed, Scaled...)"
                                                 value={exp.description}
                                                 onChange={(e) => handleInputChange('experience', 'description', e.target.value, idx)}
                                                 rows="3"
-                                                className="md:col-span-2 px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                                                className="md:col-span-2 px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-indigo-500 outline-none font-semibold text-slate-800 resize-none"
                                             />
                                         </div>
                                     </div>
@@ -413,32 +416,35 @@ const BuilderPage = ({ currentUser }) => {
                         </div>
 
                         {/* Skills */}
-                        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                            <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
-                                <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                                    <span className="bg-green-100 text-green-600 p-2 rounded-lg text-lg">💡</span>
-                                    Skills
-                                </h2>
+                        <div className="glass rounded-[2rem] p-10">
+                            <div className="flex justify-between items-center mb-10">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm">💡</div>
+                                    <div>
+                                        <h2 className="text-2xl font-black text-slate-900">Expertise</h2>
+                                        <p className="text-slate-500 font-medium">Core skills and technical stack</p>
+                                    </div>
+                                </div>
                                 <button
                                     onClick={addSkill}
-                                    className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 font-medium text-sm transition-colors"
+                                    className="px-5 py-2.5 bg-emerald-50 text-emerald-600 rounded-xl hover:bg-emerald-600 hover:text-white font-bold text-sm transition-all duration-300 shadow-sm"
                                 >
-                                    <span>➕</span> Add Skill
+                                    + Add Skill
                                 </button>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {formData.skills.map((skill, idx) => (
-                                    <div key={idx} className="flex gap-2 group">
+                                    <div key={idx} className="flex gap-2 group relative">
                                         <input
                                             type="text"
-                                            placeholder="e.g. JavaScript, Project Management"
+                                            placeholder="e.g. JavaScript"
                                             value={skill}
                                             onChange={(e) => handleSkillChange(idx, e.target.value)}
-                                            className="flex-1 px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition-all"
+                                            className="flex-1 px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50/50 outline-none transition-all font-bold text-slate-900"
                                         />
                                         <button
                                             onClick={() => removeSkill(idx)}
-                                            className="text-gray-400 hover:text-red-500 px-2 opacity-50 group-hover:opacity-100 transition-all"
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
                                         >
                                             ✕
                                         </button>
@@ -448,57 +454,60 @@ const BuilderPage = ({ currentUser }) => {
                         </div>
 
                         {/* Education */}
-                        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                            <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
-                                <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                                    <span className="bg-orange-100 text-orange-600 p-2 rounded-lg text-lg">🎓</span>
-                                    Education
-                                </h2>
+                        <div className="glass rounded-[2rem] p-10">
+                            <div className="flex justify-between items-center mb-10">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm">🎓</div>
+                                    <div>
+                                        <h2 className="text-2xl font-black text-slate-900">Education</h2>
+                                        <p className="text-slate-500 font-medium">Academic background and credentials</p>
+                                    </div>
+                                </div>
                                 <button
                                     onClick={() => addSection('education')}
-                                    className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 font-medium text-sm transition-colors"
+                                    className="px-5 py-2.5 bg-orange-50 text-orange-600 rounded-xl hover:bg-orange-600 hover:text-white font-bold text-sm transition-all duration-300 shadow-sm"
                                 >
-                                    <span>➕</span> Add Education
+                                    + Add Education
                                 </button>
                             </div>
-                            <div className="space-y-6">
+                            <div className="space-y-8">
                                 {formData.education.map((edu, idx) => (
-                                    <div key={idx} className="p-5 bg-gray-50/50 border border-gray-200 rounded-xl relative group hover:border-orange-200 transition-colors">
+                                    <div key={idx} className="p-8 bg-white/50 border-2 border-slate-100 rounded-[2rem] relative group hover:border-brand-200 hover:bg-white transition-all duration-500 shadow-sm">
                                         <button
                                             onClick={() => removeSection('education', idx)}
-                                            className="absolute top-4 right-4 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 bg-white rounded-full shadow-sm"
-                                            title="Remove"
+                                            className="absolute -top-3 -right-3 w-10 h-10 bg-white shadow-lg rounded-full text-red-500 flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-50 transition-all z-10 border border-slate-100"
+                                            title="Delete"
                                         >
-                                            🗑️
+                                            ✕
                                         </button>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <input
                                                 type="text"
                                                 placeholder="Institution / University"
                                                 value={edu.institution}
                                                 onChange={(e) => handleInputChange('education', 'institution', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                                                className="px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-orange-500 outline-none font-bold text-slate-900"
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Degree / Major"
                                                 value={edu.degree}
                                                 onChange={(e) => handleInputChange('education', 'degree', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                                                className="px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-orange-500 outline-none font-bold text-slate-900"
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Field of Study"
                                                 value={edu.field}
                                                 onChange={(e) => handleInputChange('education', 'field', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                                                className="px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-orange-500 outline-none font-bold text-slate-900"
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Graduation Year"
                                                 value={edu.graduationDate}
                                                 onChange={(e) => handleInputChange('education', 'graduationDate', e.target.value, idx)}
-                                                className="px-4 py-2 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                                                className="px-5 py-3.5 bg-white border-2 border-slate-100 rounded-2xl focus:border-orange-500 outline-none font-bold text-slate-900"
                                             />
                                         </div>
                                     </div>
