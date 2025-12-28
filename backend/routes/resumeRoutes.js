@@ -7,7 +7,9 @@ const pdfParse = require('pdf-parse');
 const mammoth = require('mammoth');
 const Resume = require('../models/Resume');
 const ATSScore = require('../models/ATSScore');
+const Upload = require('../models/Upload');
 const authenticateToken = require('../middleware/auth');
+const path = require('path');
 
 // Configure Multer for file uploads
 const storage = multer.diskStorage({
@@ -276,6 +278,131 @@ router.get('/stats', authenticateToken, async (req, res) => {
         res.json({ success: true, data: { resumeCount, atsScoreCount, averageAtsScore, latestResumeDate: latestResume ? latestResume.updatedAt : null } });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Error fetching statistics', error: error.message });
+    }
+});
+
+// File management routes
+router.post('/upload', authenticateToken, upload.single('file'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'No file uploaded' });
+        }
+
+        const newUpload = new Upload({
+            userId: req.user.id,
+            filename: req.file.filename,
+            originalname: req.file.originalname,
+            mimetype: req.file.mimetype,
+            size: req.file.size
+        });
+
+        await newUpload.save();
+
+        res.status(201).json({
+            success: true,
+            message: 'File uploaded successfully',
+            data: newUpload
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error uploading file', error: error.message });
+    }
+});
+
+router.get('/files', authenticateToken, async (req, res) => {
+    try {
+        const files = await Upload.find({ userId: req.user.id }).sort({ createdAt: -1 });
+        res.json({ success: true, count: files.length, data: files });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error fetching files', error: error.message });
+    }
+});
+
+router.get('/files/download/:id', authenticateToken, async (req, res) => {
+    try {
+        const file = await Upload.findOne({ _id: req.params.id, userId: req.user.id });
+        if (!file) {
+            return res.status(404).json({ success: false, message: 'File not found' });
+        }
+
+        const filePath = path.join(__dirname, '..', 'uploads', file.filename);
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({ success: false, message: 'Physical file not found' });
+        }
+
+        res.download(filePath, file.originalname);
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error downloading file', error: error.message });
+    }
+});
+
+router.delete('/files/:id', authenticateToken, async (req, res) => {
+    try {
+        const file = await Upload.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
+        if (!file) {
+            return res.status(404).json({ success: false, message: 'File not found' });
+        }
+
+        const filePath = path.join(__dirname, '..', 'uploads', file.filename);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
+        res.json({ success: true, message: 'File deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error deleting file', error: error.message });
+    }
+});
+
+router.post('/files/:id/analyze', authenticateToken, async (req, res) => {
+    try {
+        const file = await Upload.findOne({ _id: req.params.id, userId: req.user.id });
+        if (!file) {
+            return res.status(404).json({ success: false, message: 'File not found' });
+        }
+
+        const filePath = path.join(__dirname, '..', 'uploads', file.filename);
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({ success: false, message: 'Physical file not found' });
+        }
+
+        let text = '';
+        if (file.mimetype === 'application/pdf') {
+            const pdfData = await pdfParse(fs.readFileSync(filePath));
+            text = pdfData.text;
+        } else if (file.mimetype.includes('wordprocessingml') || file.mimetype.includes('msword')) {
+            const result = await mammoth.extractRawText({ path: filePath });
+            text = result.value;
+        }
+
+        if (!text || text.trim().length < 50) {
+            return res.status(400).json({ success: false, message: 'File content is too short for analysis' });
+        }
+
+        const { score, analysis, recommendations } = calculateATSScore(text);
+
+        const atsScore = new ATSScore({
+            userId: req.user.id,
+            fileName: file.originalname,
+            fileType: file.mimetype,
+            fileSize: file.size,
+            score,
+            analysis,
+            recommendations
+        });
+
+        await atsScore.save();
+
+        res.json({
+            success: true,
+            data: {
+                id: atsScore._id,
+                score,
+                analysis,
+                recommendations
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error analyzing file', error: error.message });
     }
 });
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ModernTemplate from './templates/ModernTemplate';
 import ClassicTemplate from './templates/ClassicTemplate';
 import CreativeTemplate from './templates/CreativeTemplate';
@@ -8,7 +8,33 @@ const BuilderPage = ({ currentUser }) => {
     const [showPreview, setShowPreview] = useState(false);
     const [atsScore, setAtsScore] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
+    const [uploadedFiles, setUploadedFiles] = useState([]);
+    const [isUploading, setIsUploading] = useState(false);
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [analysisResult, setAnalysisResult] = useState(null);
     const fileInputRef = useRef(null);
+    const uploadInputRef = useRef(null);
+
+    useEffect(() => {
+        fetchFiles();
+    }, []);
+
+    const fetchFiles = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            const response = await fetch('/api/resumes/files', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await response.json();
+            if (data.success) {
+                setUploadedFiles(data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching files:', error);
+        }
+    };
 
     // Helper function to format date from YYYY-MM to readable format
     const formatDate = (dateString) => {
@@ -113,10 +139,109 @@ const BuilderPage = ({ currentUser }) => {
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
-        if (file) {
-            // Simulation of ATS checking
-            const score = calculateATS(formData);
-            setAtsScore(score);
+        if (!file) return;
+
+        setIsUploading(true);
+        const formDataUpload = new FormData();
+        formDataUpload.append('file', file);
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please log in to upload files');
+                return;
+            }
+
+            const response = await fetch('/api/resumes/upload', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formDataUpload
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert('✅ File uploaded successfully!');
+                fetchFiles();
+            } else {
+                alert(`❌ Upload failed: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Upload error:', error);
+            alert('❌ Network error during upload');
+        } finally {
+            setIsUploading(false);
+            if (uploadInputRef.current) uploadInputRef.current.value = '';
+        }
+    };
+
+    const handleFileDelete = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this file?')) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`/api/resumes/files/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                fetchFiles();
+            } else {
+                alert(`❌ Delete failed: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Delete error:', error);
+        }
+    };
+
+    const handleFileDownload = async (file) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`/api/resumes/files/download/${file._id}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.originalname;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            } else {
+                alert('❌ Download failed');
+            }
+        } catch (error) {
+            console.error('Download error:', error);
+        }
+    };
+
+    const handleFileAnalyze = async (file) => {
+        setIsAnalyzing(true);
+        setAnalysisResult(null);
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`/api/resumes/files/${file._id}/analyze`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                setAnalysisResult(data.data);
+                // Also update the global atsScore state if we want to show it in the primary display
+                setAtsScore(data.data.score);
+            } else {
+                alert(`❌ Analysis failed: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Analysis error:', error);
+            alert('❌ Network error during analysis');
+        } finally {
+            setIsAnalyzing(false);
         }
     };
 
@@ -295,6 +420,101 @@ const BuilderPage = ({ currentUser }) => {
                                     </p>
                                 </div>
                             )}
+                        </div>
+
+                        {/* Document Manager */}
+                        <div className="glass rounded-[2rem] p-8 border-slate-100">
+                            <h3 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
+                                <span className="text-2xl">📂</span> My Documents
+                            </h3>
+
+                            <div className="space-y-4">
+                                <input
+                                    type="file"
+                                    ref={uploadInputRef}
+                                    onChange={handleFileUpload}
+                                    className="hidden"
+                                    accept=".pdf,.doc,.docx"
+                                />
+                                <button
+                                    onClick={() => uploadInputRef.current.click()}
+                                    disabled={isUploading}
+                                    className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-brand-50 text-brand-700 rounded-2xl hover:bg-brand-100 transition-all duration-300 font-bold border-2 border-brand-200 border-dashed"
+                                >
+                                    {isUploading ? '📤 Uploading...' : '➕ Upload Resource'}
+                                </button>
+
+                                <div className="space-y-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                                    {uploadedFiles.length === 0 ? (
+                                        <p className="text-center text-slate-400 py-4 font-medium text-sm italic">
+                                            No documents uploaded yet
+                                        </p>
+                                    ) : (
+                                        uploadedFiles.map((file) => (
+                                            <div key={file._id} className="p-4 bg-white/50 border border-slate-100 rounded-xl flex items-center justify-between group hover:border-brand-300 hover:bg-white transition-all shadow-sm">
+                                                <div className="flex items-center gap-3 overflow-hidden">
+                                                    <span className="text-xl">📄</span>
+                                                    <div className="overflow-hidden">
+                                                        <p className="font-bold text-slate-700 text-sm truncate">{file.originalname}</p>
+                                                        <p className="text-[10px] text-slate-400 font-bold uppercase">
+                                                            {(file.size / 1024).toFixed(1)} KB • {new Date(file.createdAt).toLocaleDateString()}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex gap-2">
+                                                    <button
+                                                        onClick={() => handleFileAnalyze(file)}
+                                                        disabled={isAnalyzing}
+                                                        className="p-2 text-slate-400 hover:text-emerald-500 transition-colors"
+                                                        title="Analyze ATS Score"
+                                                    >
+                                                        {isAnalyzing ? '...' : '🔍'}
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleFileDownload(file)}
+                                                        className="p-2 text-slate-400 hover:text-brand-600 transition-colors"
+                                                        title="Download"
+                                                    >
+                                                        ⬇️
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleFileDelete(file._id)}
+                                                        className="p-2 text-slate-400 hover:text-red-500 transition-colors"
+                                                        title="Delete"
+                                                    >
+                                                        🗑️
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+
+                                {analysisResult && (
+                                    <div className="mt-6 p-6 bg-emerald-50 border border-emerald-100 rounded-2xl animate-in fade-in slide-in-from-top-4 duration-500">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h4 className="font-black text-emerald-900 text-sm flex items-center gap-2">
+                                                <span>🎯</span> Analysis Result
+                                            </h4>
+                                            <button
+                                                onClick={() => setAnalysisResult(null)}
+                                                className="text-emerald-400 hover:text-emerald-600 font-bold"
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
+                                        <div className="flex items-end gap-3 mb-4">
+                                            <span className="text-4xl font-black text-emerald-600">{analysisResult.score}</span>
+                                            <span className="text-sm font-bold text-emerald-400 mb-1">/ 100</span>
+                                        </div>
+                                        <div className="space-y-2">
+                                            {analysisResult.recommendations.map((rec, i) => (
+                                                <p key={i} className="text-xs font-medium text-emerald-700 leading-relaxed">• {rec}</p>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
 
